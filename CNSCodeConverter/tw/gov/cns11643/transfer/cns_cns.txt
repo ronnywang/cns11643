@@ -1,0 +1,7 @@
+#online:true
+#name:CSIC(ISO 2022)
+#id:cns@cns
+#type:bin
+#pattern:
+#base:
+#description:全稱ISO/IEC 2022，使用7位編碼表示漢語文字、日語文字或朝鮮文字的方法。不直接定義任何字元集和字元碼，而是規定延伸編碼結；在各種編碼間切換的方式，提供7與8個位元之間的轉換，解決多國字元環境問題。

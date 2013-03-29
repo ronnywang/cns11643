@@ -1,0 +1,7 @@
+#online:true
+#name:戶政EUC碼
+#id:euc@euc
+#type:bin
+#pattern:
+#base:
+#description:戶役政資訊系統使用一般UNIX上常用的Extend Unix Code(EUC)碼作為內碼，其長度固定為4位元，並採用CNS11643之編碼架構及所有字集，所以EUC碼可視為CNS11643 的內碼實作，提供約九萬餘個中文字。
