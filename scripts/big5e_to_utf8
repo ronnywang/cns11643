@@ -43,6 +43,20 @@ class Converter
             }
             fclose($fp);
 
+            // custom map
+            foreach (self::$_custom_map_files as $file) {
+                $fp = fopen($file, 'r');
+                while (false !== ($line = fgets($fp))) {
+                    if (0 === strpos($line, '#')) {
+                        continue;
+                    }
+
+                    list($cns11643, $big5) = preg_split('/\s+/', trim($line), 2);
+                    self::$_big5_to_cns11643_maps[hexdec($big5) / 256][hexdec($big5) % 256] = $cns11643;
+                }
+                fclose($fp);
+            }
+
             // CNS11643 to UTF-8
             self::$_cns11643_to_utf8_maps = array();
             foreach (glob(__DIR__ . '/../CNSCodeConverter/tw/gov/cns11643/transfer/cns_unicode*') as $file) {
@@ -71,10 +85,24 @@ class Converter
         }
         return self::$_cns11643_to_utf8_maps[$cns_word];
     }
+
+    protected static $_custom_map_files = array();
+
+    public static function addCustomMapFile($file)
+    {
+        self::$_custom_map_files[] = $file;
+    }
 }
 
 $fp = fopen('php://stdin', 'r');
 $line_no = 1;
+
+for ($i = 1; $i < count($_SERVER['argv']); $i ++) {
+    if (file_exists($_SERVER['argv'][$i])) {
+        Converter::addCustomMapFile($_SERVER['argv'][$i]);
+    }
+}
+
 while (false !== ($line = fgets($fp))) {
     echo Converter::iconv($line, $line_no);
     $line_no ++;
